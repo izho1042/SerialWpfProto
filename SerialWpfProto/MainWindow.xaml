@@ -1,0 +1,31 @@
+﻿<Window x:Class="SerialWpfProto.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SerialWpfProto"
+        mc:Ignorable="d"
+        Title="Serial Communication Prototype" Height="350" Width="720" ResizeMode="CanMinimize">
+    <Grid x:Name="mainGrid" Background="MidnightBlue">
+        <ComboBox x:Name="portCombo" HorizontalAlignment="Left" Margin="86,14,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Port:" HorizontalAlignment="Left" Margin="44,10,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <ComboBox x:Name="baudCombo" HorizontalAlignment="Left" Margin="86,45,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem>2400</ComboBoxItem>
+            <ComboBoxItem>4800</ComboBoxItem>
+            <ComboBoxItem IsSelected="True">9600</ComboBoxItem>
+            <ComboBoxItem>19200</ComboBoxItem>
+            <ComboBoxItem>38400</ComboBoxItem>
+            <ComboBoxItem>115200</ComboBoxItem>
+        </ComboBox>
+        <Label Content="Baud Rate:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <TextBox x:Name="sendInput" HorizontalAlignment="Left" Height="23" Margin="117,264.958,0,0" TextWrapping="Wrap" Text="Send Message" VerticalAlignment="Top" Width="378"/>
+        <Label Content="" HorizontalAlignment="Left" Margin="133,264.958,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="sendButton" Content="Send" Click="sendButton_Click" HorizontalAlignment="Left" Margin="500,265.958,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False"/>
+        <Button x:Name="openPortButton" Content="Open Port" Click= "openPortButton_Click" HorizontalAlignment="Left" Margin="104,72,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="closePortButton" Content="Close Port" Click= "closePortButton_Click" HorizontalAlignment="Left" Margin="104,99,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False"/>
+        <ScrollViewer x:Name="resultScroll" VerticalScrollBarVisibility="Auto" Margin="232.749,9.305,29.691,117.871" >
+            <TextBlock x:Name="resultTextBlock" Background="White" TextWrapping="Wrap" Text="Result" Width="452"/>
+        </ScrollViewer>
+        <Button x:Name="clearButton" Content="Clear Data" Click="Clear_Click" HorizontalAlignment="Left" Margin="420,209.129,0,0" VerticalAlignment="Top" Width="75"/>
+    </Grid>
+</Window>

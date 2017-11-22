@@ -1,0 +1,15 @@
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\bin\Debug\SerialWpf.exe.config
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\bin\Debug\SerialWpf.exe
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\bin\Debug\SerialWpf.pdb
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\SerialWpfProto.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\MainWindow.g.cs
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\App.g.cs
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\SerialWpf_MarkupCompile.cache
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\SerialWpf_MarkupCompile.lref
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\MainWindow.baml
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\SerialWpf.g.resources
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\SerialWpf.Properties.Resources.resources
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\SerialWpfProto.csproj.GenerateResource.Cache
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\SerialWpfProto.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\SerialWpf.exe
+C:\Users\Administrator\source\repos\SerialWpfProto\SerialWpfProto\obj\Debug\SerialWpf.pdb
