@@ -175,6 +175,11 @@ namespace SerialWpfProto
                 port.DiscardInBuffer();
                 string strRcv = null;
 
+                if (receivedData.Length == 0)
+                {
+                    return;
+                }
+
                 for (int i = 0; i < receivedData.Length; i++)
                 {
                     strRcv += receivedData[i].ToString("X2");  //Hexadecimal
@@ -203,6 +208,7 @@ namespace SerialWpfProto
                 Dispatcher.BeginInvoke(new Action(delegate
                 {
                     resultTextBlock.Text = displayText;
+                    resultScroll.ScrollToVerticalOffset(resultTextBlock.ActualHeight);
                 }));
             }
             catch (System.Exception ex)
