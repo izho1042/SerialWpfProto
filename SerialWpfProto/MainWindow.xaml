@@ -21,11 +21,14 @@
         <TextBox x:Name="sendInput" HorizontalAlignment="Left" Height="23" Margin="117,264.958,0,0" TextWrapping="Wrap" Text="Send Message" VerticalAlignment="Top" Width="378"/>
         <Label Content="" HorizontalAlignment="Left" Margin="133,264.958,0,0" VerticalAlignment="Top"/>
         <Button x:Name="sendButton" Content="Send" Click="sendButton_Click" HorizontalAlignment="Left" Margin="500,265.958,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False"/>
-        <Button x:Name="openPortButton" Content="Open Port" Click= "openPortButton_Click" HorizontalAlignment="Left" Margin="104,72,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="closePortButton" Content="Close Port" Click= "closePortButton_Click" HorizontalAlignment="Left" Margin="104,99,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False"/>
+        <Button x:Name="openPortButton" Content="Open Port" Click= "openPortButton_Click" HorizontalAlignment="Left" Margin="86,155.129,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="closePortButton" Content="Close Port" Click= "closePortButton_Click" HorizontalAlignment="Left" Margin="86,182.129,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False"/>
         <ScrollViewer x:Name="resultScroll" VerticalScrollBarVisibility="Auto" Margin="232.749,9.305,29.691,117.871" >
             <TextBlock x:Name="resultTextBlock" Background="White" TextWrapping="Wrap" Text="Result" Width="452"/>
         </ScrollViewer>
         <Button x:Name="clearButton" Content="Clear Data" Click="Clear_Click" HorizontalAlignment="Left" Margin="420,209.129,0,0" VerticalAlignment="Top" Width="75"/>
+        <RadioButton x:Name="responseRadio" Content="Response" HorizontalAlignment="Left" Margin="86,106.381,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="True" Checked="responseRadio_Checked"/>
+        <RadioButton x:Name="continuousRadio" Content="Continuous" HorizontalAlignment="Left" Margin="86,122.381,0,0" VerticalAlignment="Top" Foreground="White" Checked="continuousRadio_Checked"/>
+        <Label Content="Receive Mode" HorizontalAlignment="Left" Margin="86,80.381,0,0" VerticalAlignment="Top" Foreground="White"/>
     </Grid>
 </Window>

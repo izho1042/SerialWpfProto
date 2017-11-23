@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO.Ports;
 using System.Threading;
+using System.Collections;
 
 namespace SerialWpfProto
 {
@@ -22,16 +23,29 @@ namespace SerialWpfProto
     {
         private SerialPort port;
         private ComboBoxItem[] comboItems;
-        private String outputText;
+        private String receivedText;
+        private String displayText;
         private Boolean portOpened;
-        private SerialDataReceivedEventHandler receivedHandler;
+        //private SerialDataReceivedEventHandler receivedHandler;
+        private Thread receiveThread;
+        private Boolean tReceiving;
+        private ReceiveMode receiveMode;
+        private ArrayList displayList;
+        private int receiveInterval;
 
         public MainWindow()
         {
-            receivedHandler = new SerialDataReceivedEventHandler(dataReceived);
-            portOpened = false;
-            outputText = "";
             port = new SerialPort();
+            receivedText = "";
+            displayText = "";
+            portOpened = false;
+            //receivedHandler = new SerialDataReceivedEventHandler(dataReceived);
+            receiveThread = new Thread(receiveLoop);
+            tReceiving = false;
+            receiveMode = ReceiveMode.Response;
+            displayList = new ArrayList();
+            receiveInterval = 300;
+
             InitializeComponent();
 
             string[] str = SerialPort.GetPortNames();
@@ -79,6 +93,10 @@ namespace SerialWpfProto
             }
             port.Write(sendBuffer,0,sendBuffer.Length);
             sendInput.Text = "Send Message";
+            if (receiveMode == ReceiveMode.Response)
+            {
+                dataReceived();
+            }
         }
 
         private void openPortButton_Click(object sender, RoutedEventArgs e)
@@ -96,16 +114,26 @@ namespace SerialWpfProto
                 MessageBox.Show(ea.Message,"Error");
                 return;
             }
-            port.DataReceived += receivedHandler;
+            //port.DataReceived += receivedHandler;
             portOpened = true;
             openPortButton.IsEnabled = false;
             closePortButton.IsEnabled = true;
             sendButton.IsEnabled = true;
+            if (receiveMode == ReceiveMode.Continuous) {
+                tReceiving = true;
+                startThread();
+            }
         }
 
         private void closePortButton_Click(object sender, RoutedEventArgs e)
         {
-            port.DataReceived -= receivedHandler;
+            //port.DataReceived -= receivedHandler
+            if (receiveMode == ReceiveMode.Continuous)
+            {
+                tReceiving = false;
+                receiveThread.Join();
+                receiveThread.Abort();
+            }
             portOpened = false;
             port.Close();
             closePortButton.IsEnabled = false;
@@ -114,47 +142,99 @@ namespace SerialWpfProto
             clearButton.IsEnabled = true;
         }
 
-        /*TODO: Replace with clock controlled thread*/
-        private void dataReceived(object sender, SerialDataReceivedEventArgs e)
+        private void startThread()
         {
-            if (!portOpened) {
+            receiveThread = new Thread(receiveLoop);
+            if (!portOpened)
+            {
                 return;
             }
-            
-            if (port.IsOpen)  
-            {
-                try
-                {
-                    Byte[] receivedData = new Byte[port.BytesToRead];
-                    port.Read(receivedData, 0, receivedData.Length);            
-                    port.DiscardInBuffer();
-                    string strRcv = null;
 
-                    for (int i = 0; i < receivedData.Length; i++)  
-                    {
-                        strRcv += receivedData[i].ToString("X2");  //Hexadecimal
-                    }
-                    outputText += strRcv;
-                    Dispatcher.BeginInvoke(new Action(delegate
-                    {
-                        resultTextBlock.Text = outputText;
-                    }));
-                }
-                catch (System.Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error");
-                }
-            }
-            else
+            if (port.IsOpen)
             {
-                MessageBox.Show("Please open a port", "Error");
+                receiveThread.Start();
+            }
+        }
+
+        private void receiveLoop()
+        {
+            while (tReceiving) {
+                Thread.Sleep(receiveInterval);
+                dataReceived();
+            }
+        }
+
+        /* Receive data once */
+        private void dataReceived()
+        {
+            displayText = "";
+            try
+            {
+                Byte[] receivedData = new Byte[port.BytesToRead];
+                port.Read(receivedData, 0, receivedData.Length);
+                port.DiscardInBuffer();
+                string strRcv = null;
+
+                for (int i = 0; i < receivedData.Length; i++)
+                {
+                    strRcv += receivedData[i].ToString("X2");  //Hexadecimal
+                }
+                receivedText += strRcv;
+                if (receiveMode == ReceiveMode.Continuous)
+                {
+                    if (displayList.Count >= 5)
+                    {
+                        displayList.RemoveAt(0);
+                    }
+                    displayList.Add(strRcv);
+
+                    if (displayList.Count < 1) {
+                        return;
+                    }
+
+                    for (int i = 0; i < displayList.Count; i++)
+                    {
+                        displayText += (String)displayList[i];
+                    }
+                }
+                else {
+                    displayText = receivedText.Clone().ToString();
+                }
+                Dispatcher.BeginInvoke(new Action(delegate
+                {
+                    resultTextBlock.Text = displayText;
+                }));
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
             }
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
-            outputText = "";
+            displayText = "";
             resultTextBlock.Text = "Result";
+        }
+
+        private void responseRadio_Checked(object sender, RoutedEventArgs e)
+        {
+            receiveMode = ReceiveMode.Response;
+            if (continuousRadio == null)
+            {
+                return;
+            }
+            continuousRadio.IsChecked = false;
+        }
+
+        private void continuousRadio_Checked(object sender, RoutedEventArgs e)
+        {
+            receiveMode = ReceiveMode.Continuous;
+            if (responseRadio == null)
+            {
+                return;
+            }
+            responseRadio.IsChecked = false;
         }
     }
 }
